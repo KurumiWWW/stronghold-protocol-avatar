@@ -1,0 +1,39 @@
+{
+    "name": "stronghold-protocol-avatar",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vue-tsc --build && vite build",
+        "preview": "vite preview",
+        "lint": "eslint . --fix --cache"
+    },
+    "dependencies": {
+        "cropper-next-vue": "^0.1.2",
+        "html2canvas": "^1.4.1",
+        "vue": "^3.5.30"
+    },
+    "devDependencies": {
+        "@tailwindcss/vite": "^4.2.2",
+        "@tsconfig/node24": "^24.0.4",
+        "@types/node": "^24.12.0",
+        "@vicons/ionicons5": "^0.13.0",
+        "@vitejs/plugin-vue": "^6.0.4",
+        "@vue/eslint-config-typescript": "^14.7.0",
+        "@vue/tsconfig": "^0.9.0",
+        "eslint": "^10.0.3",
+        "eslint-plugin-vue": "~10.8.0",
+        "jiti": "^2.6.1",
+        "naive-ui": "^2.44.1",
+        "prettier": "^3.8.1",
+        "tailwindcss": "^4.2.2",
+        "typescript": "~5.9.3",
+        "vfonts": "^0.0.3",
+        "vite": "^7.3.1",
+        "vue-tsc": "^3.2.5"
+    },
+    "engines": {
+        "node": "^20.19.0 || >=22.12.0"
+    }
+}

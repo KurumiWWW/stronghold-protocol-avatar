@@ -1,0 +1,162 @@
+﻿<template>
+  <n-config-provider :theme-overrides="themeOverrides">
+    <n-message-provider>
+      <n-modal-provider>
+        <div class="app-shell">
+          <div class="app-content">
+            <p class="app-title">卫戍协议头像生成器</p>
+            <p class="app-subtitle">卫吗？</p>
+            <image-upload @upload="handleUpload" ref="uploadRef" />
+            <avatar-preview :img="cropImageBase64" />
+            <div class="action-row">
+              <n-button @click="handleReset">重置</n-button>
+              <n-button type="primary" @click="handleDownload" :disabled="!cropImageBase64"
+                >导出为图片</n-button
+              >
+            </div>
+          </div>
+        </div>
+        <n-modal v-model:show="showModal">
+          <div class="cropper-modal">
+            <vue-cropper ref="cropperRef" class="cropper-panel" :img="imageBase64" />
+            <n-flex justify="end" class="cropper-actions">
+              <n-button type="primary" @click="handleCrop">提交</n-button>
+            </n-flex>
+          </div>
+        </n-modal>
+      </n-modal-provider>
+    </n-message-provider>
+  </n-config-provider>
+</template>
+
+<script setup lang="ts">
+import html2canvas from "html2canvas";
+import {
+  NButton,
+  NConfigProvider,
+  NFlex,
+  NMessageProvider,
+  NModal,
+  NModalProvider,
+  type GlobalThemeOverrides,
+} from "naive-ui";
+import { VueCropper } from "cropper-next-vue";
+import { ref } from "vue";
+import AvatarPreview from "@/components/avatarPreview.vue";
+import ImageUpload from "@/components/imageUpload.vue";
+
+const themeOverrides: GlobalThemeOverrides = {
+  common: {
+    primaryColor: "oklch(52% 0.105 223.128)",
+  },
+};
+
+const cropperRef = ref<{ getCropData: () => Promise<string> } | null>(null);
+const uploadRef = ref<{ handleReset: () => void } | null>(null);
+const showModal = ref(false);
+const imageBase64 = ref("");
+const cropImageBase64 = ref("");
+
+function handleUpload(base: string) {
+  imageBase64.value = base;
+  showModal.value = true;
+}
+
+function handleReset() {
+  imageBase64.value = "";
+  cropImageBase64.value = "";
+  showModal.value = false;
+  uploadRef.value?.handleReset();
+}
+
+async function handleCrop() {
+  const result = await cropperRef.value?.getCropData();
+
+  if (!result) {
+    return;
+  }
+
+  showModal.value = false;
+  cropImageBase64.value = result;
+}
+
+async function handleDownload() {
+  const el = document.getElementById("PreviewShell");
+  html2canvas(el as HTMLElement).then((canvas) => {
+    const url = canvas.toDataURL("image/png");
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "头像.png";
+    a.click();
+  });
+}
+</script>
+
+<style scoped>
+.app-shell {
+  min-height: 100vh;
+  padding: clamp(24px, 4vw, 40px) 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.app-content {
+  width: min(100%, 640px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(16px, 3vw, 24px);
+}
+
+.app-title {
+  margin: 0;
+  text-align: center;
+  color: rgb(14 116 144);
+  font-size: clamp(2rem, 4vw, 2.25rem);
+  font-weight: 700;
+}
+
+.app-subtitle {
+  margin: 0;
+  text-align: center;
+  color: rgb(156 163 175);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+}
+
+.action-row {
+  width: min(100%, 512px);
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.cropper-modal {
+  width: min(90vw, 480px);
+  background: #fff;
+  border-radius: 20px;
+  padding: clamp(16px, 4vw, 24px);
+  box-sizing: border-box;
+}
+
+.cropper-panel {
+  width: 100%;
+  aspect-ratio: 1;
+  display: block;
+  margin: 0 auto;
+}
+
+.cropper-actions {
+  margin-top: 12px;
+}
+
+@media (max-width: 640px) {
+  .action-row {
+    justify-content: stretch;
+  }
+
+  .action-row :deep(.n-button) {
+    flex: 1 1 160px;
+  }
+}
+</style>
