@@ -1,6 +1,9 @@
 # 卫戍协议头像生成器
 根据用户上传的图片生成卫戍协议风格的头像
 
+[去使用：](https://kurumiwww.github.io/stronghold-protocol-avatar/)
+https://kurumiwww.github.io/stronghold-protocol-avatar/
+
 ![示例](https://raw.githubusercontent.com/KurumiWWW/stronghold-protocol-avatar/refs/heads/main/public/avatar.png)
 
 ## Project Setup
