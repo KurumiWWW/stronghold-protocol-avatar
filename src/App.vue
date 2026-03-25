@@ -14,6 +14,14 @@
                 >导出为图片</n-button
               >
             </div>
+            <div class="link">
+              <n-button quaternary round @click="toLink">
+                <template #icon>
+                  <n-icon size="20"><LogoGithub /></n-icon>
+                </template>
+                <span>Github</span>
+              </n-button>
+            </div>
           </div>
         </div>
         <n-modal v-model:show="showModal">
@@ -39,11 +47,13 @@ import {
   NModal,
   NModalProvider,
   type GlobalThemeOverrides,
+  NIcon,
 } from "naive-ui";
 import { VueCropper } from "cropper-next-vue";
 import { ref } from "vue";
 import AvatarPreview from "@/components/avatarPreview.vue";
 import ImageUpload from "@/components/imageUpload.vue";
+import { LogoGithub } from "@vicons/ionicons5";
 
 const themeOverrides: GlobalThemeOverrides = {
   common: {
@@ -89,6 +99,10 @@ async function handleDownload() {
     a.download = "头像.png";
     a.click();
   });
+}
+
+function toLink() {
+  window.open("https://github.com/KurumiWWW/stronghold-protocol-avatar");
 }
 </script>
 
@@ -148,6 +162,10 @@ async function handleDownload() {
 
 .cropper-actions {
   margin-top: 12px;
+}
+
+.link span {
+  font-size: 16px;
 }
 
 @media (max-width: 640px) {
