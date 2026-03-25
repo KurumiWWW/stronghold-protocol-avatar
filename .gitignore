@@ -10,7 +10,7 @@ lerna-debug.log*
 node_modules
 .DS_Store
 .npm-cache
-#dist
+dist
 dist-ssr
 coverage
 *.local
