@@ -30,7 +30,7 @@ function resetPosition() {
 
 <template>
   <div class="preview-form">
-    <n-collapse>
+    <n-collapse :default-expanded-names="['1']">
       <n-collapse-item title="配置菜单" name="1">
         <n-form ref="formRef" :model="customForm" label-placement="left" label-width="auto">
           <n-form-item label="展示角标" path="showBadge">
