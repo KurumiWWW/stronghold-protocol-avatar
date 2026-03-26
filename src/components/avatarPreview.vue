@@ -12,7 +12,7 @@ defineProps({
       <div class="preview-avatar">
         <div class="av-cover preview-layer"></div>
         <div class="preview-grid">
-          <div class="preview-grid-line" v-for="item in 100" :key="item"></div>
+          <div class="preview-grid-line" v-for="item in 150" :key="item"></div>
         </div>
         <img v-if="img" :src="img" alt="avatar preview" class="preview-image" />
       </div>
