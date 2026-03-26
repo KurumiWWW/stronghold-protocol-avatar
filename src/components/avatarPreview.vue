@@ -1,14 +1,26 @@
 ﻿<script setup lang="ts">
+import { NFlex, NSwitch } from "naive-ui";
+import { reactive } from "vue";
 defineProps({
   img: String,
+});
+
+const customForm = reactive({
+  showBadge: true,
 });
 </script>
 
 <template>
+  <div class="preview-form">
+    <n-flex justify="end" align="center">
+      <span>展示角标:</span>
+      <n-switch size="small" v-model:value="customForm.showBadge" />
+    </n-flex>
+  </div>
   <div class="preview-shell" id="PreviewShell">
     <div class="preview-stage">
       <div class="av-text preview-layer"></div>
-      <div class="av-icon"></div>
+      <div class="av-icon" v-if="customForm.showBadge"></div>
       <div class="preview-avatar">
         <div class="av-cover preview-layer"></div>
         <div class="preview-grid">
@@ -21,8 +33,14 @@ defineProps({
 </template>
 
 <style scoped>
+.preview-form {
+  width: min(100%, 512px);
+  margin-top: 20px;
+}
+
 .preview-shell {
   width: min(100%, 512px);
+  margin-top: 20px;
 }
 
 .preview-stage {
@@ -82,14 +100,15 @@ defineProps({
   inset: 0;
   z-index: 9;
   overflow: hidden;
-  background: rgba(19, 219, 157, 0.3);
+  background: rgb(0 255 175 / 0.25);
 }
 
 .preview-grid-line {
   width: 100%;
-  height: 2px;
-  margin-top: 2px;
-  background: rgba(68, 68, 68, 0.5);
+  height: 3px;
+  margin-top: 5px;
+  //background: rgba(68, 68, 68, 0.1);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .preview-image {

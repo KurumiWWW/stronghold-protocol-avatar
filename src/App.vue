@@ -57,7 +57,7 @@ import { LogoGithub } from "@vicons/ionicons5";
 
 const themeOverrides: GlobalThemeOverrides = {
   common: {
-    primaryColor: "oklch(52% 0.105 223.128)",
+    primaryColor: "#007595FF",
   },
 };
 
@@ -124,7 +124,7 @@ function onAfterLeave() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(16px, 3vw, 24px);
+  //gap: clamp(16px, 3vw, 24px);
 }
 
 .app-title {
@@ -148,6 +148,7 @@ function onAfterLeave() {
   justify-content: flex-end;
   flex-wrap: wrap;
   gap: 12px;
+  margin-top: 20px;
 }
 
 .cropper-modal {
@@ -169,6 +170,9 @@ function onAfterLeave() {
   margin-top: 12px;
 }
 
+.link {
+  margin-top: 20px;
+}
 .link span {
   font-size: 16px;
 }
