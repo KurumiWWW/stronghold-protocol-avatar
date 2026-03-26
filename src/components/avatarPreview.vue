@@ -1,5 +1,16 @@
 ﻿<script setup lang="ts">
-import { NFlex, NSwitch } from "naive-ui";
+import {
+  NFlex,
+  NSwitch,
+  NCollapse,
+  NCollapseItem,
+  NForm,
+  NFormItem,
+  NSlider,
+  NButton,
+  NIcon,
+} from "naive-ui";
+import { Refresh } from "@vicons/ionicons5";
 import { reactive } from "vue";
 defineProps({
   img: String,
@@ -7,20 +18,53 @@ defineProps({
 
 const customForm = reactive({
   showBadge: true,
+  offsetX: 0,
+  offsetY: 0,
 });
+
+function resetPosition() {
+  customForm.offsetX = 0;
+  customForm.offsetY = 0;
+}
 </script>
 
 <template>
   <div class="preview-form">
-    <n-flex justify="end" align="center">
-      <span>展示角标:</span>
-      <n-switch size="small" v-model:value="customForm.showBadge" />
-    </n-flex>
+    <n-collapse>
+      <n-collapse-item title="配置菜单" name="1">
+        <n-form ref="formRef" :model="customForm" label-placement="left" label-width="auto">
+          <n-form-item label="展示角标" path="showBadge">
+            <n-switch v-model:value="customForm.showBadge" />
+          </n-form-item>
+          <n-flex align="center">
+            角标位置（适配QQ等圆形头像）
+            <n-button circle size="small" @click="resetPosition">
+              <template #icon>
+                <n-icon><Refresh /></n-icon>
+              </template>
+            </n-button>
+          </n-flex>
+          <n-form-item label="X">
+            <n-slider v-model:value="customForm.offsetX" :step="1" :min="-100" :max="100" />
+          </n-form-item>
+          <n-form-item label="Y">
+            <n-slider v-model:value="customForm.offsetY" :step="1" :min="-100" :max="100" />
+          </n-form-item>
+        </n-form>
+      </n-collapse-item>
+    </n-collapse>
   </div>
   <div class="preview-shell" id="PreviewShell">
     <div class="preview-stage">
       <div class="av-text preview-layer"></div>
-      <div class="av-icon" v-if="customForm.showBadge"></div>
+      <div
+        class="av-icon"
+        :style="{
+          top: `${-6 + customForm.offsetY}%`,
+          right: `${-6 + customForm.offsetX}%`,
+        }"
+        v-if="customForm.showBadge"
+      ></div>
       <div class="preview-avatar">
         <div class="av-cover preview-layer"></div>
         <div class="preview-grid">
@@ -48,7 +92,7 @@ const customForm = reactive({
   position: relative;
   width: 100%;
   aspect-ratio: 1;
-  //overflow: hidden;
+  overflow: hidden;
   background: rgba(68, 68, 68, 1);
 }
 
@@ -65,8 +109,6 @@ const customForm = reactive({
 
 .av-icon {
   position: absolute;
-  top: -6%;
-  right: -6%;
   z-index: 10;
   width: 40%;
   aspect-ratio: 1;
