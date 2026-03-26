@@ -24,7 +24,7 @@
             </div>
           </div>
         </div>
-        <n-modal v-model:show="showModal">
+        <n-modal v-model:show="showModal" :on-after-leave="onAfterLeave">
           <div class="cropper-modal">
             <vue-cropper ref="cropperRef" class="cropper-panel" :img="imageBase64" />
             <n-flex justify="end" class="cropper-actions">
@@ -103,6 +103,11 @@ async function handleDownload() {
 
 function toLink() {
   window.open("https://github.com/KurumiWWW/stronghold-protocol-avatar");
+}
+
+function onAfterLeave() {
+  imageBase64.value = "";
+  uploadRef.value?.handleReset();
 }
 </script>
 
