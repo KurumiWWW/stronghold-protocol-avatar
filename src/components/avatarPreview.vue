@@ -61,8 +61,8 @@ defineProps({
   top: 50%;
   left: 50%;
   z-index: 0;
-  width: 78%;
-  height: 78%;
+  width: 85%;
+  height: 85%;
   aspect-ratio: 1;
   border-radius: 9999px;
   transform: translate(-50%, -50%);
