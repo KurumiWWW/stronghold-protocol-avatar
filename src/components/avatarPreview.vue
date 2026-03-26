@@ -41,7 +41,7 @@ defineProps({
 }
 
 .av-text {
-  background: url("/av-text.png") no-repeat;
+  background: url("/av-text-1.png") no-repeat;
   background-size: 100% 100%;
 }
 
