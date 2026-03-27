@@ -20,6 +20,7 @@ const customForm = reactive({
   showBadge: true,
   offsetX: 0,
   offsetY: 0,
+  filter: 50,
 });
 
 function resetPosition() {
@@ -50,6 +51,9 @@ function resetPosition() {
           <n-form-item label="Y">
             <n-slider v-model:value="customForm.offsetY" :step="1" :min="-100" :max="100" />
           </n-form-item>
+          <n-form-item label="滤镜强度" path="filter">
+            <n-slider v-model:value="customForm.filter" :step="1" :min="0" :max="100" />
+          </n-form-item>
         </n-form>
       </n-collapse-item>
     </n-collapse>
@@ -67,7 +71,12 @@ function resetPosition() {
       ></div>
       <div class="preview-avatar">
         <div class="av-cover preview-layer"></div>
-        <div class="preview-grid">
+        <div
+          class="preview-grid"
+          :style="{
+            background: `rgba(0,255,189,${customForm.filter / 200})`,
+          }"
+        >
           <div class="preview-grid-line" v-for="item in 150" :key="item"></div>
         </div>
         <img v-if="img" :src="img" alt="avatar preview" class="preview-image" />
@@ -93,7 +102,8 @@ function resetPosition() {
   width: 100%;
   aspect-ratio: 1;
   overflow: hidden;
-  background: rgba(68, 68, 68, 1);
+  background: rgba(50, 50, 50, 1);
+  //background: rgba(0, 0, 0, 1);
 }
 
 .preview-layer {
@@ -121,8 +131,8 @@ function resetPosition() {
   top: 50%;
   left: 50%;
   z-index: 0;
-  width: 85%;
-  height: 85%;
+  width: 95%;
+  height: 95%;
   aspect-ratio: 1;
   border-radius: 9999px;
   transform: translate(-50%, -50%);
@@ -130,7 +140,7 @@ function resetPosition() {
 }
 
 .av-cover {
-  background: radial-gradient(circle, rgba(68, 68, 68, 0) 0%, rgba(68, 68, 68, 1) 70%);
+  background: radial-gradient(circle, rgba(50, 50, 50, 0) 10%, rgba(50, 50, 50, 1) 65%);
   width: 102%;
   height: 102%;
   margin-top: -1%;
@@ -142,14 +152,13 @@ function resetPosition() {
   inset: 0;
   z-index: 9;
   overflow: hidden;
-  background: rgb(0 255 175 / 0.25);
 }
 
 .preview-grid-line {
   width: 100%;
   height: 3px;
   margin-top: 5px;
-  //background: rgba(68, 68, 68, 0.1);
+  //background: rgba(40, 40, 40, 0.1);
   background: rgba(255, 255, 255, 0.1);
 }
 

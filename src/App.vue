@@ -10,14 +10,16 @@
             <avatar-preview :img="cropImageBase64" />
             <div class="action-row">
               <n-button @click="handleReset">重置</n-button>
-              <n-button type="primary" @click="handleDownload" :disabled="!cropImageBase64"
-                >导出为图片</n-button
-              >
+              <n-button type="primary" @click="handleImage" :disabled="!cropImageBase64"
+                >生成
+              </n-button>
             </div>
             <div class="link">
               <n-button quaternary round @click="toLink">
                 <template #icon>
-                  <n-icon size="20"><LogoGithub /></n-icon>
+                  <n-icon size="20">
+                    <LogoGithub />
+                  </n-icon>
                 </template>
                 <span>Github</span>
               </n-button>
@@ -29,6 +31,15 @@
             <vue-cropper ref="cropperRef" class="cropper-panel" :img="imageBase64" />
             <n-flex justify="end" class="cropper-actions">
               <n-button type="primary" @click="handleCrop">提交</n-button>
+            </n-flex>
+          </div>
+        </n-modal>
+        <n-modal v-model:show="showResModal" :on-after-leave="onAfterLeaveRes">
+          <div class="result-modal">
+            <img :src="urls" alt="" style="display: block" />
+            <n-flex justify="start" class="cropper-actions">
+              <p>tips：移动端若出现导出按钮无法使用的情况，可以通过手动长按保存至本地</p>
+              <n-button style="width: 100%" type="primary" @click="handleDownload">导出</n-button>
             </n-flex>
           </div>
         </n-modal>
@@ -64,6 +75,7 @@ const themeOverrides: GlobalThemeOverrides = {
 const cropperRef = ref<{ getCropData: () => Promise<string> } | null>(null);
 const uploadRef = ref<{ handleReset: () => void } | null>(null);
 const showModal = ref(false);
+const showResModal = ref(false);
 const imageBase64 = ref("");
 const cropImageBase64 = ref("");
 
@@ -90,15 +102,23 @@ async function handleCrop() {
   cropImageBase64.value = result;
 }
 
-async function handleDownload() {
+const urls = ref("");
+function handleImage() {
   const el = document.getElementById("PreviewShell");
   html2canvas(el as HTMLElement).then((canvas) => {
-    const url = canvas.toDataURL("image/png");
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "头像.png";
-    a.click();
+    urls.value = canvas.toDataURL("image/png");
+    showResModal.value = true;
   });
+}
+function handleDownload() {
+  // const el = document.getElementById("PreviewShell");
+  // html2canvas(el as HTMLElement).then((canvas) => {
+  const url = urls.value;
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "头像.png";
+  a.click();
+  // });
 }
 
 function toLink() {
@@ -108,6 +128,9 @@ function toLink() {
 function onAfterLeave() {
   imageBase64.value = "";
   uploadRef.value?.handleReset();
+}
+function onAfterLeaveRes() {
+  urls.value = "";
 }
 </script>
 
@@ -159,6 +182,14 @@ function onAfterLeave() {
   box-sizing: border-box;
 }
 
+.result-modal {
+  width: min(90vw, 530px);
+  background: #fff;
+  border-radius: 20px;
+  padding: clamp(16px, 4vw, 24px);
+  box-sizing: border-box;
+}
+
 .cropper-panel {
   width: 100%;
   aspect-ratio: 1;
@@ -173,6 +204,7 @@ function onAfterLeave() {
 .link {
   margin-top: 20px;
 }
+
 .link span {
   font-size: 16px;
 }
