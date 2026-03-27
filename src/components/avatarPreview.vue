@@ -140,7 +140,14 @@ function resetPosition() {
 }
 
 .av-cover {
-  background: radial-gradient(circle, rgba(50, 50, 50, 0) 10%, rgba(50, 50, 50, 1) 65%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 33%,
+    rgba(50, 50, 50, 0.1) 40%,
+    rgba(50, 50, 50, 0.4) 50%,
+    rgba(50, 50, 50, 1) 65%
+  );
   width: 102%;
   height: 102%;
   margin-top: -1%;
