@@ -74,7 +74,7 @@ function resetPosition() {
         <div
           class="preview-grid"
           :style="{
-            background: `rgba(0,255,189,${customForm.filter / 200})`,
+            background: `rgba(48,219,177,${customForm.filter / 200})`,
           }"
         >
           <div class="preview-grid-line" v-for="item in 150" :key="item"></div>
@@ -87,6 +87,7 @@ function resetPosition() {
 
 <style scoped>
 .preview-form {
+  /*color: #30dbb1;*/
   width: min(100%, 512px);
   margin-top: 20px;
 }
@@ -103,7 +104,7 @@ function resetPosition() {
   aspect-ratio: 1;
   overflow: hidden;
   background: rgba(50, 50, 50, 1);
-  //background: rgba(0, 0, 0, 1);
+  /*background: rgba(0, 0, 0, 1);*/
 }
 
 .preview-layer {
@@ -136,7 +137,7 @@ function resetPosition() {
   aspect-ratio: 1;
   border-radius: 9999px;
   transform: translate(-50%, -50%);
-  //overflow: hidden;
+  /*overflow: hidden;*/
 }
 
 .av-cover {
@@ -165,8 +166,9 @@ function resetPosition() {
   width: 100%;
   height: 3px;
   margin-top: 5px;
-  //background: rgba(40, 40, 40, 0.1);
-  background: rgba(255, 255, 255, 0.1);
+/*  background: rgba(40, 40, 40, 0.1);
+  background: rgba(255, 255, 255, 0.1);*/
+  background: rgba(48, 219, 177, 0.15);
 }
 
 .preview-image {

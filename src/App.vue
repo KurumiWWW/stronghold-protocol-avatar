@@ -147,7 +147,7 @@ function onAfterLeaveRes() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  //gap: clamp(16px, 3vw, 24px);
+  /*gap: clamp(16px, 3vw, 24px);*/
 }
 
 .app-title {
