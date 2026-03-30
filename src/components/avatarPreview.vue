@@ -21,6 +21,7 @@ const customForm = reactive({
   offsetX: 0,
   offsetY: 0,
   filter: 50,
+  badgeSize: 0,
 });
 
 function resetPosition() {
@@ -36,6 +37,9 @@ function resetPosition() {
         <n-form ref="formRef" :model="customForm" label-placement="left" label-width="auto">
           <n-form-item label="展示角标" path="showBadge">
             <n-switch v-model:value="customForm.showBadge" />
+          </n-form-item>
+          <n-form-item label="角标大小" path="badgeSize">
+            <n-slider v-model:value="customForm.badgeSize" :step="1" :min="-100" :max="100" />
           </n-form-item>
           <n-flex align="center">
             角标位置（适配QQ等圆形头像）
@@ -60,12 +64,16 @@ function resetPosition() {
   </div>
   <div class="preview-shell" id="PreviewShell">
     <div class="preview-stage">
-      <div class="av-text preview-layer"></div>
+      <!--      <div class="av-text preview-layer"></div>-->
+      <!--      <div class="av-text-1 preview-layer"></div>-->
+      <img class="av-text-1" src="/111.png" alt="" />
+      <img class="av-text-2" src="/112.png" alt="" />
       <div
         class="av-icon"
         :style="{
           top: `${-6 + customForm.offsetY}%`,
           right: `${-6 + customForm.offsetX}%`,
+          transform: `scale(${1 + customForm.badgeSize * 0.01})`,
         }"
         v-if="customForm.showBadge"
       ></div>
@@ -114,17 +122,36 @@ function resetPosition() {
 }
 
 .av-text {
-  background: url("/av-text-1.png") no-repeat;
+  /*background: url("/av-text-1.png") no-repeat 30px center;
+  background-size: 70% 70%;*/
+  background: url("/av-text.png") no-repeat;
   background-size: 100% 100%;
+}
+.av-text-1 {
+  display: block;
+  width: 200px;
+  position: absolute;
+  z-index: 10;
+  bottom: 10%;
+  left: 10%;
+}
+.av-text-2 {
+  display: block;
+  width: 200px;
+  position: absolute;
+  z-index: 10;
+  top: 12.5%;
+  left: 8%;
 }
 
 .av-icon {
   position: absolute;
   z-index: 10;
-  width: 40%;
   aspect-ratio: 1;
   background: url("/av-icon.png") no-repeat;
   background-size: 100% 100%;
+  width: 40%;
+  transform-origin: center;
 }
 
 .preview-avatar {
@@ -166,7 +193,7 @@ function resetPosition() {
   width: 100%;
   height: 3px;
   margin-top: 5px;
-/*  background: rgba(40, 40, 40, 0.1);
+  /*  background: rgba(40, 40, 40, 0.1);
   background: rgba(255, 255, 255, 0.1);*/
   background: rgba(48, 219, 177, 0.15);
 }
