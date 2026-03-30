@@ -129,7 +129,7 @@ function resetPosition() {
 }
 .av-text-1 {
   display: block;
-  width: 200px;
+  width: 40%;
   position: absolute;
   z-index: 10;
   bottom: 10%;
@@ -137,7 +137,7 @@ function resetPosition() {
 }
 .av-text-2 {
   display: block;
-  width: 200px;
+  width: 40%;
   position: absolute;
   z-index: 10;
   top: 12.5%;
