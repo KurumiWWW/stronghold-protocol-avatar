@@ -192,7 +192,7 @@ function resetPosition() {
 .preview-grid-line {
   width: 100%;
   height: 3px;
-  margin-top: 5px;
+  margin-top: 3px;
   /*  background: rgba(40, 40, 40, 0.1);
   background: rgba(255, 255, 255, 0.1);*/
   background: rgba(48, 219, 177, 0.15);
