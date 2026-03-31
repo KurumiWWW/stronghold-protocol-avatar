@@ -21,7 +21,7 @@
                     <LogoGithub />
                   </n-icon>
                 </template>
-                <span>Github</span>
+                <span>GitHub</span>
               </n-button>
               <n-button quaternary round @click="toBili">
                 <template #icon>
