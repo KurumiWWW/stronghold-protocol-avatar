@@ -23,6 +23,14 @@
                 </template>
                 <span>Github</span>
               </n-button>
+              <n-button quaternary round @click="toBili">
+                <template #icon>
+                  <n-icon size="20">
+                    <icon-bili />
+                  </n-icon>
+                </template>
+                <span>Bilibili</span>
+              </n-button>
             </div>
           </div>
         </div>
@@ -65,6 +73,7 @@ import { ref } from "vue";
 import AvatarPreview from "@/components/avatarPreview.vue";
 import ImageUpload from "@/components/imageUpload.vue";
 import { LogoGithub } from "@vicons/ionicons5";
+import IconBili from "@/components/iconBili.vue";
 
 const themeOverrides: GlobalThemeOverrides = {
   common: {
@@ -124,6 +133,9 @@ function handleDownload() {
 function toLink() {
   window.open("https://github.com/KurumiWWW/stronghold-protocol-avatar");
 }
+function toBili() {
+  window.open("https://www.bilibili.com/video/BV1b5XWB1Eyk");
+}
 
 function onAfterLeave() {
   imageBase64.value = "";
@@ -137,7 +149,7 @@ function onAfterLeaveRes() {
 <style scoped>
 .app-shell {
   min-height: 100vh;
-  padding: clamp(24px, 4vw, 40px) 16px;
+  padding: clamp(24px, 4vw, 24px) 16px;
   display: flex;
   justify-content: center;
 }
@@ -171,7 +183,7 @@ function onAfterLeaveRes() {
   justify-content: flex-end;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .cropper-modal {
@@ -202,7 +214,7 @@ function onAfterLeaveRes() {
 }
 
 .link {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .link span {

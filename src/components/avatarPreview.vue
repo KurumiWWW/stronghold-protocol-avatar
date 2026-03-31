@@ -97,12 +97,12 @@ function resetPosition() {
 .preview-form {
   /*color: #30dbb1;*/
   width: min(100%, 512px);
-  margin-top: 20px;
+  margin-top: 6px;
 }
 
 .preview-shell {
   width: min(100%, 512px);
-  margin-top: 20px;
+  margin-top: 6px;
 }
 
 .preview-stage {
