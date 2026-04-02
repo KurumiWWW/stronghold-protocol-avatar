@@ -102,7 +102,7 @@ function resetPosition() {
 
 .preview-shell {
   width: min(100%, 512px);
-  margin-top: 6px;
+  margin-top: 10px;
 }
 
 .preview-stage {
