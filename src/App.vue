@@ -2,26 +2,34 @@
   <n-config-provider :theme-overrides="themeOverrides">
     <n-message-provider>
       <n-modal-provider>
-        <div class="app-shell">
-          <div class="app-content">
-            <p class="app-title">卫戍协议头像生成器</p>
-            <p class="app-subtitle">卫吗？</p>
+        <div class="flex min-h-screen justify-center px-4 py-[clamp(24px,4vw,24px)]">
+          <div class="flex w-full max-w-[640px] flex-col items-center">
+            <p class="m-0 text-center text-[rgb(14_116_144)] [font-size:clamp(2rem,4vw,2.25rem)] font-bold">
+              卫戍协议头像生成器
+            </p>
+            <p class="m-0 text-center text-[rgb(156_163_175)] [font-size:clamp(1rem,2.5vw,1.25rem)]">
+              卫吗？
+            </p>
             <image-upload @upload="handleUpload" ref="uploadRef" />
             <avatar-preview :img="cropImageBase64" />
-            <div class="action-row">
-              <n-button @click="handleReset">重置</n-button>
-              <n-button type="primary" @click="handleImage" :disabled="!cropImageBase64"
+            <div class="mt-[10px] flex w-full max-w-[512px] flex-wrap justify-end gap-3">
+              <n-button class="max-[640px]:flex-[1_1_160px]" @click="handleReset">重置</n-button>
+              <n-button
+                class="max-[640px]:flex-[1_1_160px]"
+                type="primary"
+                @click="handleImage"
+                :disabled="!cropImageBase64"
                 >生成
               </n-button>
             </div>
-            <div class="link">
+            <div class="mt-[10px]">
               <n-button quaternary round @click="toLink">
                 <template #icon>
                   <n-icon size="20">
                     <LogoGithub />
                   </n-icon>
                 </template>
-                <span>GitHub</span>
+                <span class="text-[16px]">GitHub</span>
               </n-button>
               <n-button quaternary round @click="toBili">
                 <template #icon>
@@ -29,25 +37,29 @@
                     <icon-bili />
                   </n-icon>
                 </template>
-                <span>Bilibili</span>
+                <span class="text-[16px]">Bilibili</span>
               </n-button>
             </div>
           </div>
         </div>
         <n-modal v-model:show="showModal" :on-after-leave="onAfterLeave">
-          <div class="cropper-modal">
-            <vue-cropper ref="cropperRef" class="cropper-panel" :img="imageBase64" />
-            <n-flex justify="end" class="cropper-actions">
+          <div class="w-[min(90vw,480px)] rounded-[20px] bg-white p-[clamp(16px,4vw,24px)]">
+            <vue-cropper
+              ref="cropperRef"
+              class="mx-auto block aspect-square w-full"
+              :img="imageBase64"
+            />
+            <n-flex justify="end" class="mt-3">
               <n-button type="primary" @click="handleCrop">提交</n-button>
             </n-flex>
           </div>
         </n-modal>
         <n-modal v-model:show="showResModal" :on-after-leave="onAfterLeaveRes">
-          <div class="result-modal">
-            <img :src="urls" alt="" style="display: block" />
-            <n-flex justify="start" class="cropper-actions">
+          <div class="w-[min(90vw,530px)] rounded-[20px] bg-white p-[clamp(16px,4vw,24px)]">
+            <img :src="urls" alt="" class="block" />
+            <n-flex justify="start" class="mt-3">
               <p>tips：移动端若出现导出按钮无法使用的情况，可以通过手动长按保存至本地</p>
-              <n-button style="width: 100%" type="primary" @click="handleDownload">导出</n-button>
+              <n-button class="w-full" type="primary" @click="handleDownload">导出</n-button>
             </n-flex>
           </div>
         </n-modal>
@@ -145,89 +157,3 @@ function onAfterLeaveRes() {
   urls.value = "";
 }
 </script>
-
-<style scoped>
-.app-shell {
-  min-height: 100vh;
-  padding: clamp(24px, 4vw, 24px) 16px;
-  display: flex;
-  justify-content: center;
-}
-
-.app-content {
-  width: min(100%, 640px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /*gap: clamp(16px, 3vw, 24px);*/
-}
-
-.app-title {
-  margin: 0;
-  text-align: center;
-  color: rgb(14 116 144);
-  font-size: clamp(2rem, 4vw, 2.25rem);
-  font-weight: 700;
-}
-
-.app-subtitle {
-  margin: 0;
-  text-align: center;
-  color: rgb(156 163 175);
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
-}
-
-.action-row {
-  width: min(100%, 512px);
-  display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 10px;
-}
-
-.cropper-modal {
-  width: min(90vw, 480px);
-  background: #fff;
-  border-radius: 20px;
-  padding: clamp(16px, 4vw, 24px);
-  box-sizing: border-box;
-}
-
-.result-modal {
-  width: min(90vw, 530px);
-  background: #fff;
-  border-radius: 20px;
-  padding: clamp(16px, 4vw, 24px);
-  box-sizing: border-box;
-}
-
-.cropper-panel {
-  width: 100%;
-  aspect-ratio: 1;
-  display: block;
-  margin: 0 auto;
-}
-
-.cropper-actions {
-  margin-top: 12px;
-}
-
-.link {
-  margin-top: 10px;
-}
-
-.link span {
-  font-size: 16px;
-}
-
-@media (max-width: 640px) {
-  .action-row {
-    justify-content: stretch;
-  }
-
-  .action-row :deep(.n-button) {
-    flex: 1 1 160px;
-  }
-}
-</style>

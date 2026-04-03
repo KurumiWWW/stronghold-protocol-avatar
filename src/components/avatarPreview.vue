@@ -31,7 +31,7 @@ function resetPosition() {
 </script>
 
 <template>
-  <div class="preview-form">
+  <div class="mt-1.5 w-full max-w-lg">
     <n-collapse :default-expanded-names="['1']">
       <n-collapse-item title="配置菜单" name="1">
         <n-form ref="formRef" :model="customForm" label-placement="left" label-width="auto">
@@ -62,14 +62,12 @@ function resetPosition() {
       </n-collapse-item>
     </n-collapse>
   </div>
-  <div class="preview-shell" id="PreviewShell">
-    <div class="preview-stage">
-      <!--      <div class="av-text preview-layer"></div>-->
-      <!--      <div class="av-text-1 preview-layer"></div>-->
-      <img class="av-text-1" src="/111.png" alt="" />
-      <img class="av-text-2" src="/112.png" alt="" />
+  <div class="mt-2.5 w-full max-w-lg" id="PreviewShell">
+    <div class="pointer-events-none relative aspect-square w-full overflow-hidden bg-[rgba(50,50,50,1)]">
+      <img class="absolute bottom-[10%] left-[10%] z-10 block w-[40%]" src="/111.png" alt="" />
+      <img class="absolute left-[8%] top-[12.5%] z-10 block w-[40%]" src="/112.png" alt="" />
       <div
-        class="av-icon"
+        class="absolute z-10 aspect-square w-[40%] origin-center bg-[url('/av-icon.png')] bg-size-[100%_100%] bg-no-repeat"
         :style="{
           top: `${-6 + customForm.offsetY}%`,
           right: `${-6 + customForm.offsetX}%`,
@@ -77,132 +75,24 @@ function resetPosition() {
         }"
         v-if="customForm.showBadge"
       ></div>
-      <div class="preview-avatar">
-        <div class="av-cover preview-layer"></div>
+      <div class="absolute left-1/2 top-1/2 z-0 aspect-square h-[95%] w-[95%] -translate-x-1/2 -translate-y-1/2 rounded-full">
         <div
-          class="preview-grid"
+          class="absolute inset-0 z-10 -ml-[1%] -mt-[1%] h-[102%] w-[102%] bg-[radial-gradient(circle,rgba(255,255,255,0)_0%,rgba(255,255,255,0)_33%,rgba(50,50,50,0.1)_40%,rgba(50,50,50,0.4)_50%,rgba(50,50,50,1)_65%)]"
+        ></div>
+        <div
+          class="absolute inset-0 z-9 overflow-hidden"
           :style="{
             background: `rgba(48,219,177,${customForm.filter / 200})`,
           }"
         >
-          <div class="preview-grid-line" v-for="item in 150" :key="item"></div>
+          <div
+            class="mt-0.75 h-0.75 w-full bg-[rgba(48,219,177,0.15)]"
+            v-for="item in 150"
+            :key="item"
+          ></div>
         </div>
-        <img v-if="img" :src="img" alt="avatar preview" class="preview-image" />
+        <img v-if="img" :src="img" alt="avatar preview" class="absolute inset-0 z-0 h-full w-full" />
       </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-.preview-form {
-  /*color: #30dbb1;*/
-  width: min(100%, 512px);
-  margin-top: 6px;
-}
-
-.preview-shell {
-  width: min(100%, 512px);
-  margin-top: 10px;
-}
-
-.preview-stage {
-  pointer-events: none;
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1;
-  overflow: hidden;
-  background: rgba(50, 50, 50, 1);
-  /*background: rgba(0, 0, 0, 1);*/
-}
-
-.preview-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 10;
-}
-
-.av-text {
-  /*background: url("/av-text-1.png") no-repeat 30px center;
-  background-size: 70% 70%;*/
-  background: url("/av-text.png") no-repeat;
-  background-size: 100% 100%;
-}
-.av-text-1 {
-  display: block;
-  width: 40%;
-  position: absolute;
-  z-index: 10;
-  bottom: 10%;
-  left: 10%;
-}
-.av-text-2 {
-  display: block;
-  width: 40%;
-  position: absolute;
-  z-index: 10;
-  top: 12.5%;
-  left: 8%;
-}
-
-.av-icon {
-  position: absolute;
-  z-index: 10;
-  aspect-ratio: 1;
-  background: url("/av-icon.png") no-repeat;
-  background-size: 100% 100%;
-  width: 40%;
-  transform-origin: center;
-}
-
-.preview-avatar {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 0;
-  width: 95%;
-  height: 95%;
-  aspect-ratio: 1;
-  border-radius: 9999px;
-  transform: translate(-50%, -50%);
-  /*overflow: hidden;*/
-}
-
-.av-cover {
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0) 33%,
-    rgba(50, 50, 50, 0.1) 40%,
-    rgba(50, 50, 50, 0.4) 50%,
-    rgba(50, 50, 50, 1) 65%
-  );
-  width: 102%;
-  height: 102%;
-  margin-top: -1%;
-  margin-left: -1%;
-}
-
-.preview-grid {
-  position: absolute;
-  inset: 0;
-  z-index: 9;
-  overflow: hidden;
-}
-
-.preview-grid-line {
-  width: 100%;
-  height: 3px;
-  margin-top: 3px;
-  /*  background: rgba(40, 40, 40, 0.1);
-  background: rgba(255, 255, 255, 0.1);*/
-  background: rgba(48, 219, 177, 0.15);
-}
-
-.preview-image {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-}
-</style>

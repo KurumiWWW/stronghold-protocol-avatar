@@ -51,7 +51,7 @@ defineExpose({ handleReset });
 </script>
 
 <template>
-  <div class="upload-shell">
+  <div class="w-full max-w-lg">
     <n-upload
       ref="uploadRef"
       multiple
@@ -61,20 +61,14 @@ defineExpose({ handleReset });
       :custom-request="customRequest"
     >
       <n-upload-dragger>
-        <div style="margin-bottom: 12px">
+        <div class="mb-3">
           <n-icon size="48" :depth="3">
             <ArchiveOutline />
           </n-icon>
         </div>
-        <n-text style="font-size: 16px">点击或拖动文件到这里上传</n-text>
-        <n-p depth="3" style="margin: 8px 0 0 0">上传前请确认文件格式为图片</n-p>
+        <n-text class="text-[16px]">点击或拖动文件到这里上传</n-text>
+        <n-p depth="3" class="mb-0 mt-2">上传前请确认文件格式为图片</n-p>
       </n-upload-dragger>
     </n-upload>
   </div>
 </template>
-
-<style scoped>
-.upload-shell {
-  width: min(100%, 512px);
-}
-</style>
