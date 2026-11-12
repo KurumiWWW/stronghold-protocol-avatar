@@ -1,4 +1,4 @@
-﻿<script setup lang="ts">
+<script setup lang="ts">
 import type { UploadCustomRequestOptions, UploadInst } from "naive-ui";
 import { NP, NIcon, NText, NUpload, NUploadDragger, useMessage } from "naive-ui";
 import { ArchiveOutline } from "@vicons/ionicons5";
