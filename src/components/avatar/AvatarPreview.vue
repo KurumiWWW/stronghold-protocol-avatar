@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import type { AvatarConfig } from "@/types/avatar";
 
+const badgeImages: Record<AvatarConfig["badgeStyle"], string> = {
+  normal: `${import.meta.env.BASE_URL}av-icon.png`,
+  advanced: `${import.meta.env.BASE_URL}av-icon-m.png`,
+};
+
 defineProps<{
   img?: string;
   config: AvatarConfig;
@@ -13,8 +18,9 @@ defineProps<{
       <img class="absolute bottom-[10%] left-[10%] z-10 block w-[40%]" src="/111.png" alt="" />
       <img class="absolute left-[8%] top-[12.5%] z-10 block w-[40%]" src="/112.png" alt="" />
       <div
-        class="absolute z-10 aspect-square w-[40%] origin-center bg-[url('/av-icon.png')] bg-size-[100%_100%] bg-no-repeat"
+        class="absolute z-10 aspect-square w-[40%] origin-center bg-size-[100%_100%] bg-no-repeat"
         :style="{
+          backgroundImage: `url('${badgeImages[config.badgeStyle]}')`,
           top: `${-6 + config.offsetY}%`,
           right: `${-6 + config.offsetX}%`,
           transform: `scale(${1 + config.badgeSize * 0.01})`,

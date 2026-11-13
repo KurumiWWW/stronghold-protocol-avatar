@@ -14,6 +14,7 @@ import { Refresh } from "@vicons/ionicons5";
 import type { AvatarConfig } from "@/types/avatar";
 
 const showBadge = defineModel<AvatarConfig["showBadge"]>("showBadge", { required: true });
+const badgeStyle = defineModel<AvatarConfig["badgeStyle"]>("badgeStyle", { required: true });
 const badgeSize = defineModel<AvatarConfig["badgeSize"]>("badgeSize", { required: true });
 const offsetX = defineModel<AvatarConfig["offsetX"]>("offsetX", { required: true });
 const offsetY = defineModel<AvatarConfig["offsetY"]>("offsetY", { required: true });
@@ -27,12 +28,25 @@ const emit = defineEmits<{ resetPosition: [] }>();
       <n-collapse-item title="配置菜单" name="1">
         <n-form
           ref="formRef"
-          :model="{ showBadge, badgeSize, offsetX, offsetY, filter }"
+          :model="{ showBadge, badgeStyle, badgeSize, offsetX, offsetY, filter }"
           label-placement="left"
           label-width="auto"
         >
           <n-form-item label="展示角标" path="showBadge">
             <n-switch v-model:value="showBadge" />
+          </n-form-item>
+          <n-form-item label="角标样式" path="badgeStyle">
+            <n-switch
+              v-model:value="badgeStyle"
+              checked-value="advanced"
+              unchecked-value="normal"
+              :disabled="!showBadge"
+              size="large"
+              aria-label="角标样式"
+            >
+              <template #checked>进阶</template>
+              <template #unchecked>普通</template>
+            </n-switch>
           </n-form-item>
           <n-form-item label="角标大小" path="badgeSize">
             <n-slider v-model:value="badgeSize" :step="1" :min="-100" :max="100" />

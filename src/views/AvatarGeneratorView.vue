@@ -10,6 +10,7 @@
       <image-upload @upload="handleUpload" ref="uploadRef" />
       <avatar-controls
         v-model:show-badge="customForm.showBadge"
+        v-model:badge-style="customForm.badgeStyle"
         v-model:badge-size="customForm.badgeSize"
         v-model:offset-x="customForm.offsetX"
         v-model:offset-y="customForm.offsetY"
@@ -77,6 +78,7 @@ import type { AvatarConfig } from "@/types/avatar";
 
 const customForm = reactive<AvatarConfig>({
   showBadge: true,
+  badgeStyle: "normal",
   offsetX: 0,
   offsetY: 0,
   filter: 50,
