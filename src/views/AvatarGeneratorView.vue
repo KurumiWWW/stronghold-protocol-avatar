@@ -19,11 +19,16 @@
       />
       <avatar-preview :img="cropImageBase64" :config="customForm" />
       <div class="mt-[10px] flex w-full max-w-[512px] flex-wrap justify-end gap-3">
-        <n-button class="max-[640px]:flex-[1_1_160px]" @click="handleReset">重置</n-button>
+        <n-button
+          class="max-[640px]:flex-[1_1_160px]"
+          @click="handleReset"
+          :disabled="isGenerating"
+          >重置</n-button>
         <n-button
           class="max-[640px]:flex-[1_1_160px]"
           type="primary"
           @click="handleImage"
+          :loading="isGenerating"
           :disabled="!cropImageBase64"
           >生成
         </n-button>
@@ -64,9 +69,9 @@
 </template>
 
 <script setup lang="ts">
-import html2canvas from "html2canvas";
-import { NButton, NIcon } from "naive-ui";
-import { reactive, ref } from "vue";
+import html2canvas from "html2canvas-pro";
+import { NButton, NIcon, useMessage } from "naive-ui";
+import { nextTick, reactive, ref } from "vue";
 import { LogoGithub } from "@vicons/ionicons5";
 import AvatarControls from "@/components/avatar/AvatarControls.vue";
 import AvatarPreview from "@/components/avatar/AvatarPreview.vue";
@@ -76,12 +81,13 @@ import ImageUpload from "@/components/avatar/ImageUpload.vue";
 import IconBili from "@/components/icons/IconBili.vue";
 import type { AvatarConfig } from "@/types/avatar";
 
+const message = useMessage();
 const customForm = reactive<AvatarConfig>({
   showBadge: true,
-  badgeStyle: "normal",
+  badgeStyle: "advanced",
   offsetX: 0,
   offsetY: 0,
-  filter: 50,
+  filter: 30,
   badgeSize: 0,
 });
 
@@ -121,22 +127,42 @@ async function handleCrop() {
 }
 
 const urls = ref("");
-function handleImage() {
-  const el = document.getElementById("PreviewShell");
-  html2canvas(el as HTMLElement).then((canvas) => {
+const isGenerating = ref(false);
+
+async function handleImage() {
+  if (isGenerating.value || !cropImageBase64.value) {
+    return;
+  }
+
+  isGenerating.value = true;
+
+  try {
+    // 等待配置更新及图片解码，避免刚切换角标或提交裁剪就生成时遗漏素材。
+    await nextTick();
+    const el = document.getElementById("PreviewShell");
+
+    if (!el) {
+      message.error("预览区域未就绪，请重试");
+      return;
+    }
+
+    await Promise.all(Array.from(el.querySelectorAll("img"), (img) => img.decode()));
+    const canvas = await html2canvas(el);
     urls.value = canvas.toDataURL("image/png");
     showResModal.value = true;
-  });
+  } catch {
+    message.error("生成失败，请确认图片加载完成后重试");
+  } finally {
+    isGenerating.value = false;
+  }
 }
+
 function handleDownload() {
-  // const el = document.getElementById("PreviewShell");
-  // html2canvas(el as HTMLElement).then((canvas) => {
   const url = urls.value;
   const a = document.createElement("a");
   a.href = url;
   a.download = "头像.png";
   a.click();
-  // });
 }
 
 function toLink() {
